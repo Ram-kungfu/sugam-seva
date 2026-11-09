@@ -69,7 +69,7 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- 1. प्रॉम्प्ट जनरेटर (Live AI)                -->
+        <!-- 1. प्रॉम्प्ट जनरेटर (Dual AI)                -->
         <!-- ========================================== -->
         <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 space-y-4">
             <h3 class="text-lg font-semibold text-slate-800 flex items-center gap-2">
@@ -77,7 +77,14 @@
             </h3>
             <p class="text-xs text-slate-600 mb-2">यहाँ से आपको बिल्कुल सटीक और प्रोफेशनल प्रॉम्प्ट मिलेगा, जिसे आप ChatGPT, Gemini या Claude में कॉपी-पेस्ट कर सकते हैं।</p>
             
-            <div class="grid md:grid-cols-3 gap-4">
+            <div class="grid md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">AI मॉडल चुनें:</label>
+                    <select id="ai-model-prompt" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm bg-slate-50 font-semibold text-purple-700">
+                        <option value="gemini">Google Gemini</option>
+                        <option value="groq">Llama 3.3 (Groq)</option>
+                    </select>
+                </div>
                 <div>
                     <label class="block text-sm font-medium mb-1">अपना लक्ष्य चुनें:</label>
                     <select id="prompt-goal" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm bg-slate-50">
@@ -89,7 +96,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-1">विषय / प्रोडक्ट का नाम:</label>
-                    <input type="text" id="prompt-topic" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm" placeholder="उदा. जैविक खाद / एआई कोर्स / गेहूं की फसल">
+                    <input type="text" id="prompt-topic" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm" placeholder="उदा. जैविक खाद / एआई कोर्स">
                 </div>
                 <div class="flex items-end">
                     <button onclick="generatePrompt()" id="gen-prompt-btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2.5 rounded-lg transition">
@@ -107,12 +114,18 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- 2. AI टूल गाइड चैट                          -->
+        <!-- 2. AI टूल गाइड चैट (Dual AI)                -->
         <!-- ========================================== -->
         <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-            <h3 class="text-lg font-semibold text-slate-800 mb-2 flex items-center gap-2">
-                <i class="fa-solid fa-circle-question text-purple-600"></i> AI टूल गाइड: किस काम के लिए कौन सा AI यूज़ करें?
-            </h3>
+            <div class="flex justify-between items-start mb-2">
+                <h3 class="text-lg font-semibold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-question text-purple-600"></i> AI टूल गाइड
+                </h3>
+                <select id="ai-model-chat" class="border border-slate-300 p-1.5 rounded-lg text-xs bg-slate-50 font-semibold text-purple-700">
+                    <option value="gemini">Google Gemini</option>
+                    <option value="groq">Llama 3.3 (Groq)</option>
+                </select>
+            </div>
             <p class="text-xs text-slate-600 mb-4">अगर आपको कोई काम करना है (जैसे वीडियो बनाना, फोटो एडिट करना, या कोड लिखना), तो यहाँ AI से पूछें कि कौन सा टूल बेस्ट है और उसे कैसे चलाएं।</p>
             
             <div id="chat-container" class="chat-box bg-slate-50 border border-slate-300 rounded-lg p-4 mb-3 space-y-3">
@@ -148,14 +161,54 @@
     </footer>
 
     <!-- ========================================== -->
-    <!-- JAVASCRIPT LOGIC                           -->
+    <!-- JAVASCRIPT LOGIC (DUAL AI SUPPORT)         -->
     <!-- ========================================== -->
     <script>
-        // 🔴 अपनी API Key यहाँ डालें
-        const GEMINI_API_KEY = "आपकी_API_Key_यहाँ_पेस्ट_करें"; 
+        // 🔴 Render Environment से Keys लें, अगर नहीं मिले तो नीचे अपनी Keys डालें (लोकल टेस्ट के लिए)
+        const GEMINI_API_KEY = window.ENV ? window.ENV.GEMINI_API_KEY : "आपकी_GEMINI_Key_यहाँ_डालें"; 
+        const GROQ_API_KEY = window.ENV ? window.ENV.GROQ_API_KEY : "gsk_आपकी_GROQ_Key_यहाँ_डालें"; 
 
-        // --- 1. असली AI से प्रॉम्प्ट जनरेट करने का फंक्शन ---
+        // --- साझा फंक्शन: AI से जवाब लाने के लिए ---
+        async function fetchAIResponse(modelType, promptText) {
+            if (modelType === 'gemini') {
+                // Gemini API
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
+                });
+                const data = await response.json();
+                if(data.candidates && data.candidates.length > 0) {
+                    return data.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error("Gemini API Error");
+                }
+            } else if (modelType === 'groq') {
+                // Groq (Llama 3.3) API
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${GROQ_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: "llama-3.3-70b-versatile",
+                        messages: [{ role: "user", content: promptText }],
+                        temperature: 0.5
+                    })
+                });
+                const data = await response.json();
+                if(data.choices && data.choices.length > 0) {
+                    return data.choices[0].message.content;
+                } else {
+                    throw new Error("Groq API Error");
+                }
+            }
+        }
+
+        // --- 1. प्रॉम्प्ट जनरेटर फंक्शन ---
         async function generatePrompt() {
+            const model = document.getElementById('ai-model-prompt').value;
             const goal = document.getElementById('prompt-goal').value;
             const topic = document.getElementById('prompt-topic').value.trim();
             const btn = document.getElementById('gen-prompt-btn');
@@ -166,7 +219,7 @@
                 return;
             }
 
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> बना रहा है...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> AI सोच रहा है...';
             btn.disabled = true;
             resultBox.classList.add('hidden');
 
@@ -176,30 +229,17 @@
             else if(goal === 'coding') goalText = "मुझे एक वेबसाइट का HTML/CSS कोड लिखवाना है।";
             else if(goal === 'content') goalText = "मुझे YouTube वीडियो या ब्लॉग के लिए एक स्क्रिप्ट लिखनी है।";
 
-            // AI को निर्देश देना कि वह हमारे लिए एक 'प्रॉम्प्ट' तैयार करे
             const aiInstruction = `तुम एक एक्सपर्ट 'Prompt Engineer' हो। मेरा लक्ष्य है: "${goalText}" और मेरा विषय (Topic) है: "${topic}"। 
             मुझे एक बहुत ही शानदार और प्रोफेशनल AI प्रॉम्प्ट (English में) बनाकर दो, जिसे मैं कॉपी करके ChatGPT, Claude या Midjourney में डाल सकूँ।
             सिर्फ प्रॉम्प्ट लिखो, कोई अतिरिक्त बात नहीं। प्रॉम्प्ट में स्पष्ट निर्देश दें कि AI को क्या करना है।`;
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: aiInstruction }] }] })
-                });
-
-                const data = await response.json();
-
-                if(data.candidates && data.candidates.length > 0) {
-                    let aiReply = data.candidates[0].content.parts[0].text;
-                    document.getElementById('prompt-text').innerText = aiReply.trim();
-                    resultBox.classList.remove('hidden');
-                } else {
-                    alert('AI से प्रॉम्प्ट नहीं बन पाया। API Key चेक करें।');
-                }
+                let aiReply = await fetchAIResponse(model, aiInstruction);
+                document.getElementById('prompt-text').innerText = aiReply.trim();
+                resultBox.classList.remove('hidden');
             } catch (error) {
                 console.error(error);
-                alert('इंटरनेट या API में समस्या है।');
+                alert('AI से जवाब नहीं मिला। कृपया दूसरा मॉडल चुनें या API Key चेक करें।');
             } finally {
                 btn.innerHTML = 'AI से प्रॉम्प्ट बनवाएं';
                 btn.disabled = false;
@@ -214,6 +254,7 @@
 
         // --- 2. AI टूल गाइड चैट फंक्शन ---
         async function askToolGuide() {
+            const model = document.getElementById('ai-model-chat').value;
             const inputField = document.getElementById('chat-input');
             const userQuestion = inputField.value.trim();
             const chatContainer = document.getElementById('chat-container');
@@ -221,7 +262,6 @@
 
             if(!userQuestion) return;
 
-            // यूजर का मैसेज
             chatContainer.innerHTML += `
                 <div class="flex items-start gap-2 justify-end">
                     <div class="bg-purple-600 text-white p-3 rounded-lg text-sm max-w-[80%]">
@@ -232,7 +272,6 @@
             inputField.value = ''; 
             chatContainer.scrollTop = chatContainer.scrollHeight;
 
-            // लोडिंग मैसेज
             const loadingId = "loading-" + Date.now();
             chatContainer.innerHTML += `
                 <div class="flex items-start gap-2" id="${loadingId}">
@@ -252,36 +291,22 @@
             साथ ही संक्षेप में बताओ कि उस टूल को कैसे यूज़ करें। जवाब बहुत आसान हिंदी में दें।`;
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: promptText }] }]
-                    })
-                });
-
-                const data = await response.json();
+                let aiReply = await fetchAIResponse(model, promptText);
                 document.getElementById(loadingId).remove(); 
-
-                if(data.candidates && data.candidates.length > 0) {
-                    const aiReply = data.candidates[0].content.parts[0].text;
-                    chatContainer.innerHTML += `
-                        <div class="flex items-start gap-2">
-                            <div class="w-8 h-8 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fa-solid fa-robot"></i>
-                            </div>
-                            <div class="bg-white border border-slate-200 p-3 rounded-lg text-sm text-slate-700 max-w-[85%] whitespace-pre-wrap">
-                                ${aiReply}
-                            </div>
+                
+                chatContainer.innerHTML += `
+                    <div class="flex items-start gap-2">
+                        <div class="w-8 h-8 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-robot"></i>
                         </div>
-                    `;
-                } else {
-                    chatContainer.innerHTML += `<div class="text-red-500 text-sm">जवाब नहीं मिला। API Key चेक करें।</div>`;
-                }
-
+                        <div class="bg-white border border-slate-200 p-3 rounded-lg text-sm text-slate-700 max-w-[85%] whitespace-pre-wrap">
+                            ${aiReply}
+                        </div>
+                    </div>
+                `;
             } catch (error) {
                 document.getElementById(loadingId).remove();
-                chatContainer.innerHTML += `<div class="text-red-500 text-sm">इंटरनेट या API में समस्या है।</div>`;
+                chatContainer.innerHTML += `<div class="text-red-500 text-sm p-2">जवाब नहीं मिला। कृपया दूसरा मॉडल चुनें या API Key चेक करें।</div>`;
             } finally {
                 sendBtn.disabled = false;
                 chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -289,4 +314,4 @@
         }
     </script>
 </body>
-                    </html>
+    </html>
