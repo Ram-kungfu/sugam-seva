@@ -13,6 +13,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
+    <!-- Header -->
     <header class="bg-red-800 text-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
             <a href="index.html" class="flex items-center space-x-3 space-x-reverse">
@@ -28,6 +29,7 @@
         </div>
     </header>
 
+    <!-- Breadcrumb -->
     <div class="bg-red-900 text-red-200 text-xs px-4 py-2">
         <div class="max-w-7xl mx-auto">
             <a href="index.html" class="hover:text-white">होम</a> / <span class="text-white">भ्रष्टाचार-विरोधी वॉल्ट</span>
@@ -38,7 +40,7 @@
 
         <div class="bg-red-50 border-l-4 border-red-600 p-4 rounded-r-lg">
             <h2 class="text-xl font-bold text-red-900">भ्रष्टाचार-विरोधी वॉल्ट (Confidential Anti-Corruption Portal)</h2>
-            <p class="text-sm text-red-700">यदि कोई सरकारी या गैर-सरकारी अधिकारी आपसे योजना, सब्सिडी या राशन में रिश्वत मांगता है, तो यहाँ 100% गोपनीय रिपोर्ट दर्ज करें।</p>
+            <p class="text-sm text-red-700">यदि कोई सरकारी या गैर-सरकारी अधिकारी आपसे योजना, सब्सिडी या राशन में रिश्वत मांगता है, तो यहाँ 100% गोपनीय रिपोर्ट तैयार करें और सीधा सरकारी पोर्टल पर भेजें।</p>
         </div>
 
         <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 space-y-4 max-w-3xl mx-auto">
@@ -55,18 +57,34 @@
                     <textarea id="complaint-desc" rows="4" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm" placeholder="स्थान, तिथि और मांगी गई रिश्वत/अन्याय का पूरा ब्योरा दें..."></textarea>
                 </div>
                 <div class="flex items-center gap-2 text-xs text-slate-500">
-                    <i class="fa-solid fa-lock text-emerald-600"></i> आपकी पहचान पूरी तरह गुप्त (Anonymous) रखी जाएगी। IP एड्रेस सेव नहीं होता।
+                    <i class="fa-solid fa-lock text-emerald-600"></i> आपकी पहचान पूरी तरह गुप्त (Anonymous) रखी जाएगी।
                 </div>
                 <button onclick="submitComplaint()" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-lg transition flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-paper-plane"></i> ब्लॉकचेन वॉल्ट में सुरक्षित भेजें
+                    <i class="fa-solid fa-paper-plane"></i> शिकायत तैयार करें (रिपोर्ट जनरेट करें)
                 </button>
             </div>
 
-            <div id="vault-confirm" class="hidden p-4 bg-slate-900 text-emerald-400 rounded-lg text-center space-y-2">
-                <i class="fa-solid fa-shield-cat text-4xl text-emerald-400"></i>
-                <h4 class="font-bold text-white">शिकायत सफलतापूर्वक दर्ज की गई!</h4>
-                <p class="text-xs text-slate-300">ब्लॉकचेन हैश आईडी: <span id="hash-id" class="font-mono text-emerald-300"></span></p>
-                <p class="text-xs text-slate-400">यह रिपोर्ट सीधे केंद्रीय सतर्कता आयोग के डिजिटल पोर्टल पर एन्क्रिप्ट करके भेज दी गई है।</p>
+            <!-- OUTPUT SECTION -->
+            <div id="vault-confirm" class="hidden p-4 bg-slate-900 text-white rounded-lg space-y-3 mt-4 border border-slate-700">
+                <div class="text-center">
+                    <i class="fa-solid fa-shield-cat text-4xl text-emerald-400 mb-2"></i>
+                    <h4 class="font-bold text-lg">आपकी शिकायत तैयार है!</h4>
+                    <p class="text-xs text-slate-300">यहाँ से आप सीधा सरकारी (CVC) पोर्टल पर जा सकते हैं, शिकायत कॉपी कर सकते हैं या डाउनलोड कर सकते हैं।</p>
+                </div>
+                
+                <!-- Buttons Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                    <a href="https://portal.cvc.gov.in" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2.5 rounded-lg flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-external-link-alt"></i> CVC पोर्टल पर जाएँ
+                    </a>
+                    <button onclick="copyComplaint()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 text-sm font-bold py-2.5 rounded-lg flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-copy"></i> शिकायत कॉपी करें
+                    </button>
+                    <button onclick="downloadComplaint()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold py-2.5 rounded-lg flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> डाउनलोड करें
+                    </button>
+                </div>
+                <p class="text-[10px] text-slate-400 text-center mt-2">* CVC पोर्टल पर शिकायत दर्ज करने के लिए आपको अपना नाम और पता देना होगा (गोपनीय रखा जाएगा)।</p>
             </div>
         </div>
 
@@ -83,14 +101,49 @@
         </div>
     </footer>
 
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC                           -->
+    <!-- ========================================== -->
     <script>
+        let currentDept = "";
+        let currentDesc = "";
+
+        // 1. शिकायत तैयार करने का फंक्शन
         function submitComplaint() {
             const dept = document.getElementById('dept-name').value;
             const desc = document.getElementById('complaint-desc').value;
-            if(!dept || !desc) { alert('कृपया विभाग का नाम और विवरण पूरा भरें।'); return; }
-            const hash = "0x" + Array.from({length: 32}, () => Math.floor(Math.random()*16).toString(16)).join('');
+
+            if(!dept || !desc) {
+                alert('कृपया विभाग का नाम और विवरण पूरा भरें।');
+                return;
+            }
+
+            currentDept = dept;
+            currentDesc = desc;
+
             document.getElementById('vault-confirm').classList.remove('hidden');
-            document.getElementById('hash-id').innerText = hash;
+        }
+
+        // 2. शिकायत कॉपी करने का फंक्शन
+        function copyComplaint() {
+            const textContent = `शिकायत विवरण (Complaint Details)\n\nविभाग/अधिकारी: ${currentDept}\n\nघटना का विवरण:\n${currentDesc}\n\nदिनांक: ${new Date().toLocaleDateString('hi-IN')}\n\n------------------------\nसुगम सेवा (Sugam Seva) द्वारा जनरेट किया गया।`;
+            navigator.clipboard.writeText(textContent);
+            alert('आपकी शिकायत कॉपी हो गई है! अब आप इसे CVC पोर्टल पर पेस्ट कर सकते हैं।');
+        }
+
+        // 3. शिकायत डाउनलोड करने का फंक्शन
+        function downloadComplaint() {
+            const textContent = `शिकायत विवरण (Complaint Details)\n\nविभाग/अधिकारी: ${currentDept}\n\nघटना का विवरण:\n${currentDesc}\n\nदिनांक: ${new Date().toLocaleDateString('hi-IN')}\n\n------------------------\nसुगम सेवा (Sugam Seva) द्वारा जनरेट किया गया।\nइसे केंद्रीय सतर्कता आयोग (CVC) पोर्टल पर जमा करें।`;
+
+            const blob = new Blob([textContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Shikayat_${new Date().getTime()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
         }
     </script>
 </body>
