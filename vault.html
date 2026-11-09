@@ -75,20 +75,42 @@
                     <p class="text-xs text-slate-300">नीचे दिए गए किसी भी सरकारी पोर्टल पर जाएँ और अपनी शिकायत दर्ज करें।</p>
                 </div>
                 
-                <!-- Government Portals Buttons (2 Options) -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                    <!-- CPGRAMS (PMO Portal) -->
-                    <a href="https://pgportal.gov.in" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2.5 rounded-lg flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-landmark"></i> CPGRAMS (PMO) पोर्टल
+                <!-- CPGRAMS Portal Section -->
+                <div class="bg-slate-800 p-3 rounded-lg border border-slate-600 mt-3">
+                    <a href="https://pgportal.gov.in" target="_blank" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2.5 rounded-lg flex items-center justify-center gap-2 mb-3">
+                        <i class="fa-solid fa-landmark"></i> CPGRAMS (PMO) पोर्टल पर जाएँ
                     </a>
-                    <!-- CVC Portal -->
-                    <a href="https://portal.cvc.gov.in" target="_blank" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-2.5 rounded-lg flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-scale-balanced"></i> CVC (सतर्कता) पोर्टल
+                    <div class="text-[11px] text-slate-300 space-y-1 bg-slate-900/50 p-2 rounded">
+                        <p class="font-bold text-blue-300 mb-1">इस पोर्टल पर क्या शिकायत कर सकते हैं?</p>
+                        <ul class="list-disc list-inside space-y-0.5">
+                            <li><strong>राशन कार्ड:</strong> राशन न मिलना, गलत मात्रा मिलना, दुकानदार का गोलमाल।</li>
+                            <li><strong>पेंशन:</strong> वृद्धावस्था, विधवा या दिव्यांग पेंशन समय पर न आना।</li>
+                            <li><strong>बिजली/पानी:</strong> बिना कारण बिल ज्यादा आना, बार-बार बिजली जाना, पानी की सप्लाई न होना।</li>
+                            <li><strong>सड़क/निर्माण:</strong> गांव या शहर की सड़कें टूटी होना, स्ट्रीट लाइट खराब होना।</li>
+                            <li><strong>सरकारी दफ्तर:</strong> काम न होना, कर्मचारियों का गलत व्यवहार करना।</li>
+                            <li><strong>स्वास्थ्य/शिक्षा:</strong> अस्पताल या स्कूल में सुविधाओं की कमी।</li>
+                            <li><strong>योजनाएं:</strong> किसी सरकारी योजना का लाभ नहीं मिल रहा है।</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CVC Portal Section -->
+                <div class="bg-slate-800 p-3 rounded-lg border border-slate-600 mt-2">
+                    <a href="https://portal.cvc.gov.in" target="_blank" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-2.5 rounded-lg flex items-center justify-center gap-2 mb-3">
+                        <i class="fa-solid fa-scale-balanced"></i> CVC (सतर्कता) पोर्टल पर जाएँ
                     </a>
+                    <div class="text-[11px] text-slate-300 space-y-1 bg-slate-900/50 p-2 rounded">
+                        <p class="font-bold text-indigo-300 mb-1">इस पोर्टल पर क्या शिकायत कर सकते हैं?</p>
+                        <ul class="list-disc list-inside space-y-0.5">
+                            <li>कोई अधिकारी या कर्मचारी आपसे <strong>रिश्वत (घूस)</strong> मांग रहा हो।</li>
+                            <li>कोई अधिकारी जानबूझकर आपका काम नहीं कर रहा हो या परेशान कर रहा हो।</li>
+                            <li>सरकारी योजनाओं या सब्सिडी में गड़बड़ी (जैसे रिश्वत लेकर काम करना)।</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- Copy & Download Buttons -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                     <button onclick="copyComplaint()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 text-sm font-bold py-2.5 rounded-lg flex items-center justify-center gap-2">
                         <i class="fa-solid fa-copy"></i> शिकायत कॉपी करें
                     </button>
@@ -165,4 +187,4 @@
         }
     </script>
 </body>
-</html>
+                            </html>
