@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI टूल लैब - सुगम सेवा</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', 'Tiro Devanagari Hindi', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <header class="bg-purple-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3 space-x-reverse">
+                <i class="fa-solid fa-robot text-3xl text-purple-300"></i>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-wide">सुगम सेवा</h1>
+                    <p class="text-xs text-purple-200">AI टूल & प्रॉम्प्ट मास्टर मॉड्यूल</p>
+                </div>
+            </a>
+            <a href="index.html" class="mt-2 sm:mt-0 bg-purple-700 hover:bg-purple-600 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-house"></i> होम पर वापस
+            </a>
+        </div>
+    </header>
+
+    <div class="bg-purple-900 text-purple-200 text-xs px-4 py-2">
+        <div class="max-w-7xl mx-auto">
+            <a href="index.html" class="hover:text-white">होम</a> / <span class="text-white">AI टूल लैब</span>
+        </div>
+    </div>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+
+        <div class="bg-purple-50 border-l-4 border-purple-600 p-4 rounded-r-lg">
+            <h2 class="text-xl font-bold text-purple-900">AI टूल एवं प्रॉम्प्ट इंजीनियरिंग मास्टरमाइंड</h2>
+            <p class="text-sm text-purple-700">दुनिया के सर्वश्रेष्ठ AI टूल्स को चलाना सीखें। कौन-सा टूल किस काम आता है और किस प्रॉम्प्ट से सटीक काम कराया जाता है, सब कुछ यहाँ है।</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-2">
+                <span class="px-2.5 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-bold">Text & Code AI</span>
+                <h3 class="font-bold text-slate-800">ChatGPT / Claude / Gemini</h3>
+                <p class="text-xs text-slate-600">लेख लिखने, बिजनेस प्लान बनाने, कोडिंग करने और ईमेल ड्राफ़्ट करने के लिए।</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-2">
+                <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold">Graphics AI</span>
+                <h3 class="font-bold text-slate-800">Midjourney / Canva AI</h3>
+                <p class="text-xs text-slate-600">3D लोगो, थंबनेल, विज्ञापन पोस्टर और उच्च-गुणवत्ता तस्वीरें जनरेट करने हेतु।</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-2">
+                <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold">Audio & Voice</span>
+                <h3 class="font-bold text-slate-800">ElevenLabs / Murf AI</h3>
+                <p class="text-xs text-slate-600">किसी भी भाषा में प्राकृतिक इंसानी आवाज़ (Voiceover) बनाने के लिए।</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-2">
+                <span class="px-2.5 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-bold">Video AI</span>
+                <h3 class="font-bold text-slate-800">Runway Gen-3 / HeyGen</h3>
+                <p class="text-xs text-slate-600">बिना कैमरा/चेहरे के AI अवतार और वीडियो रील्स तैयार करने हेतु।</p>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 space-y-4">
+            <h3 class="text-lg font-semibold text-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i> रेडी-टू-यूज़ प्रॉम्प्ट जनरेटर (Copy-Paste Prompts)
+            </h3>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">अपना लक्ष्य चुनें:</label>
+                    <select id="prompt-goal" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm bg-slate-50">
+                        <option value="marketing">फेसबुक विज्ञापन लेखन</option>
+                        <option value="image">फार्मिंग 3D पोस्टर बनाना</option>
+                        <option value="coding">वेबसाइट कोड तैयार करना</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">विषय / प्रोडक्ट नाम:</label>
+                    <input type="text" id="prompt-topic" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm" placeholder="उदा. जैविक खाद / एआई कोर्स">
+                </div>
+                <div class="flex items-end">
+                    <button onclick="generatePrompt()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2.5 rounded-lg transition">
+                        प्रॉम्प्ट जनरेट करें
+                    </button>
+                </div>
+            </div>
+
+            <div id="prompt-result-box" class="hidden p-4 bg-slate-900 text-slate-100 rounded-lg relative font-mono text-sm">
+                <button onclick="copyPrompt()" class="absolute top-3 right-3 bg-purple-500 hover:bg-purple-600 text-white text-xs px-2.5 py-1 rounded">
+                    <i class="fa-solid fa-copy"></i> कॉपी करें
+                </button>
+                <p id="prompt-text" class="pr-20"></p>
+            </div>
+        </div>
+
+        <div class="text-center pt-4">
+            <a href="index.html" class="inline-flex items-center gap-2 bg-slate-700 hover:bg-slate-800 text-white px-6 py-2.5 rounded-lg font-medium">
+                <i class="fa-solid fa-arrow-left"></i> होम पेज पर वापस जाएँ
+            </a>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs mt-auto">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p>© 2026 सुगम सेवा (Sugam Seva) - AI टूल मॉड्यूल</p>
+        </div>
+    </footer>
+
+    <script>
+        function generatePrompt() {
+            const goal = document.getElementById('prompt-goal').value;
+            const topic = document.getElementById('prompt-topic').value || 'उत्पाद';
+            let prompt = "";
+            if(goal === 'marketing') {
+                prompt = `तुम एक एक्सर्ट सोशल मीडिया मार्केटर हो। मुझे "${topic}" बेचने के लिए 3 बहुत ही आकर्षक हिंदी विज्ञापन ड्राफ़्ट करके दो जो ग्राहकों को खरीदने पर प्रेरित करें।`;
+            } else if(goal === 'image') {
+                prompt = `A hyper-realistic 3D isometric render of ${topic}, highly detailed, vibrant lighting, 8k resolution, photorealistic --ar 16:9`;
+            } else {
+                prompt = `Write a complete responsive HTML and CSS script for a single-page website promoting "${topic}". Include a contact form and modern green color palette.`;
+            }
+            document.getElementById('prompt-result-box').classList.remove('hidden');
+            document.getElementById('prompt-text').innerText = prompt;
+        }
+        function copyPrompt() {
+            const text = document.getElementById('prompt-text').innerText;
+            navigator.clipboard.writeText(text);
+            alert('प्रॉम्प्ट कॉपी हो गया है!');
+        }
+    </script>
+</body>
+</html>
