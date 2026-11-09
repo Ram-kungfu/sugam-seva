@@ -14,6 +14,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
+    <!-- Header -->
     <header class="bg-blue-800 text-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
             <a href="index.html" class="flex items-center space-x-3 space-x-reverse">
@@ -29,6 +30,7 @@
         </div>
     </header>
 
+    <!-- Breadcrumb -->
     <div class="bg-blue-900 text-blue-200 text-xs px-4 py-2">
         <div class="max-w-7xl mx-auto">
             <a href="index.html" class="hover:text-white">होम</a> / <span class="text-white">शिक्षा, करियर व कमाई</span>
@@ -43,7 +45,7 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- 1. AI करियर गाइडेंस सेक्शन (सबसे जरूरी)      -->
+        <!-- 1. AI करियर गाइडेंस सेक्शन                   -->
         <!-- ========================================== -->
         <div class="bg-gradient-to-r from-blue-700 to-blue-900 text-white p-6 rounded-xl shadow-lg">
             <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
@@ -69,21 +71,23 @@
             <h3 class="text-lg font-semibold text-slate-800 mb-2 flex items-center gap-2">
                 <i class="fa-solid fa-brain text-blue-600"></i> AI स्टडी असिस्टेंट (पढ़ाई करें और टेस्ट दें)
             </h3>
-            <p class="text-xs text-slate-600 mb-4">अपने सिलेबस या किसी भी विषय से जुड़ा सवाल पूछें। AI आपको आसान भाषा में समझाएगा और टेस्ट भी लेगा।</p>
+            <p class="text-xs text-slate-600 mb-4">अपने सिलेबस, कोर्स या किसी भी विषय से जुड़ा सवाल पूछें। AI आपको आसान भाषा में समझाएगा और आपका ज्ञान टेस्ट भी करेगा।</p>
             
+            <!-- चैट बॉक्स -->
             <div id="chat-container" class="chat-box bg-slate-50 border border-slate-300 rounded-lg p-4 mb-3 space-y-3">
                 <div class="flex items-start gap-2">
                     <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                         <i class="fa-solid fa-robot"></i>
                     </div>
                     <div class="bg-white border border-slate-200 p-3 rounded-lg text-sm text-slate-700">
-                        नमस्ते! मैं आपका AI शिक्षक हूँ। आप मुझसे किसी भी विषय के बारे में पूछ सकते हैं। टेस्ट देने के लिए लिखें— "मेरा टेस्ट लो"।
+                        नमस्ते! मैं आपका AI शिक्षक हूँ। आप मुझसे गणित, विज्ञान, अंग्रेजी, कंप्यूटर या किसी भी स्किल के बारे में पूछ सकते हैं। आप चाहें तो मुझसे कहें—"मेरा टेस्ट लो"।
                     </div>
                 </div>
             </div>
 
+            <!-- इनपुट बॉक्स -->
             <div class="flex gap-2">
-                <input type="text" id="chat-input" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm" placeholder="अपना सवाल यहाँ लिखें..." onkeypress="if(event.key === 'Enter') askAI()">
+                <input type="text" id="chat-input" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm" placeholder="अपना सवाल यहाँ लिखें (उदा. फोटोसिंथेसिस क्या है?)..." onkeypress="if(event.key === 'Enter') askAI()">
                 <button onclick="askAI()" id="send-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2.5 rounded-lg transition flex items-center justify-center">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -140,9 +144,56 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- 4. पैसा कमाने का फॉर्मूला (Financial Literacy) -->
+        <!-- 4. ऑनलाइन और ऑफलाइन कमाई के रास्ते          -->
         <!-- ========================================== -->
-        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+        <div class="grid md:grid-cols-2 gap-6 mt-6">
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-globe text-blue-600"></i> ऑनलाइन कमाई के रास्ते
+                </h3>
+                <ul class="space-y-3 text-sm">
+                    <li class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900 block font-semibold">AI रील्स व वीडियो बनाना (Faceless Content)</strong>
+                        <p class="text-xs text-slate-600">बिना चेहरे के AI आवाज़ और वीडियो बनाकर YouTube Shorts व Instagram से कमाई करें।</p>
+                        <a href="https://elevenlabs.io" target="_blank" class="text-xs text-blue-600 font-semibold underline mt-1 inline-block">Direct Tool Link →</a>
+                    </li>
+                    <li class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900 block font-semibold">ग्लोबल फ़्रीलांसिंग (Freelancing)</strong>
+                        <p class="text-xs text-slate-600">Upwork व Fiverr पर जाकर कंटेंट राइटिंग, डेटा एंट्री और लोगो डिज़ाइन सेवाएँ डॉलर में बेचें।</p>
+                        <a href="https://www.fiverr.com" target="_blank" class="text-xs text-blue-600 font-semibold underline mt-1 inline-block">Direct Portal Link →</a>
+                    </li>
+                    <li class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900 block font-semibold">एफिलिएट मार्केटिंग (Affiliate Selling)</strong>
+                        <p class="text-xs text-slate-600">Telegram व WhatsApp ग्रुप्स के ज़रिए उपयोगी सामान प्रमोट करके कमीशन कमाएँ।</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <h3 class="text-lg font-semibold text-emerald-800 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-store text-emerald-600"></i> ऑफ़लाइन व लोकल कमाई के रास्ते
+                </h3>
+                <ul class="space-y-3 text-sm">
+                    <li class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900 block font-semibold">डिजिटल कृषि सेवा केंद्र (Local Tech Hub)</strong>
+                        <p class="text-xs text-slate-600">गांव के किसानों को मोबाइल से सब्सिडी फ़ार्म, AI सलाह और सॉफ़्टवेयर टोकन निकालने की सेवा देकर शुल्क लें।</p>
+                    </li>
+                    <li class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900 block font-semibold">ड्रोन व स्मार्ट फार्मिंग ऑपरेटर</strong>
+                        <p class="text-xs text-slate-600">फसलों में दवा छिड़काव के लिए ड्रोन ऑपरेटर सर्विस शुरू करें।</p>
+                    </li>
+                    <li class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900 block font-semibold">सोलर पैनल व होम ऑटोमेशन एजेंट</strong>
+                        <p class="text-xs text-slate-600">स्थानीय स्तर पर पीएम सूर्य घर योजना के तहत रजिस्ट्रेशन व मेंटेनेंस सर्विस दें।</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 5. पैसा कमाने का फॉर्मूला (Financial Literacy) -->
+        <!-- ========================================== -->
+        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 mt-6">
             <h3 class="text-lg font-semibold text-slate-800 mb-3 flex items-center gap-2">
                 <i class="fa-solid fa-coins text-amber-500"></i> पैसा कमाने के बाद क्या करें? (Money Formula)
             </h3>
@@ -176,7 +227,7 @@
 
     <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs mt-auto">
         <div class="max-w-7xl mx-auto px-4 space-y-2">
-            <p>© 2026 सुगम सेवा (Sugam Seva) - शिक्षा व करियर मॉड्यूल</p>
+            <p>© 2026 सुगम सेवा (Sugam Seva) - शिक्षा, करियर व कमाई मॉड्यूल</p>
         </div>
     </footer>
 
