@@ -1,1 +1,198 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>सुगम सेवा (Sugam Seva) - होम</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', 'Tiro Devanagari Hindi', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
+    <!-- Header -->
+    <header class="bg-emerald-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3 space-x-reverse">
+                <i class="fa-solid fa-wheat-awn text-3xl text-emerald-300"></i>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-wide">सुगम सेवा</h1>
+                    <p class="text-xs text-emerald-200">कृषि • शिक्षा व कमाई • पारदर्शी शासन (AI सुपर ऐप)</p>
+                </div>
+            </a>
+            <div class="mt-2 sm:mt-0 flex items-center space-x-2 space-x-reverse text-sm">
+                <span class="bg-emerald-700 px-3 py-1 rounded-full text-xs font-semibold border border-emerald-500">
+                    <i class="fa-solid fa-shield-halved mr-1"></i> DPIIT मान्यता प्राप्त
+                </span>
+                <span class="bg-emerald-900 px-3 py-1 rounded-full text-xs font-semibold text-emerald-300">
+                    <i class="fa-solid fa-lock mr-1"></i> सुरक्षित 256-Bit
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-3">एक प्लेटफ़ॉर्म, अनेक समाधान</h2>
+            <p class="text-emerald-100 max-w-2xl mx-auto">किसान, छात्र, उद्यमी और आम नागरिक — सभी के लिए AI-संचालित, पारदर्शी और भ्रष्टाचार-मुक्त डिजिटल सेवाएँ।</p>
+        </div>
+    </section>
+
+    <!-- Main Modules Grid -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 text-center">मुख्य मॉड्यूल चुनें</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <!-- Card 1: Agri -->
+            <a href="agri.html" class="group bg-white p-6 rounded-xl shadow-md border border-slate-200 hover:shadow-xl hover:border-emerald-500 transition-all transform hover:-translate-y-1">
+                <div class="w-14 h-14 bg-emerald-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-emerald-600 transition">
+                    <i class="fa-solid fa-leaf text-2xl text-emerald-700 group-hover:text-white"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2">1. कृषि डॉक्टर</h3>
+                <p class="text-sm text-slate-600 mb-4">AI द्वारा फसल रोग जाँच और बिचौलिया-मुक्त सब्सिडी टोकन।</p>
+                <span class="text-emerald-600 font-semibold text-sm inline-flex items-center gap-1">
+                    खोलें <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                </span>
+            </a>
+
+            <!-- Card 2: Edu -->
+            <a href="edu.html" class="group bg-white p-6 rounded-xl shadow-md border border-slate-200 hover:shadow-xl hover:border-blue-500 transition-all transform hover:-translate-y-1">
+                <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-600 transition">
+                    <i class="fa-solid fa-graduation-cap text-2xl text-blue-700 group-hover:text-white"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2">2. शिक्षा व कमाई</h3>
+                <p class="text-sm text-slate-600 mb-4">ऑनलाइन/ऑफ़लाइन कौशल सीखकर पैसे कमाने के रास्ते।</p>
+                <span class="text-blue-600 font-semibold text-sm inline-flex items-center gap-1">
+                    खोलें <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                </span>
+            </a>
+
+            <!-- Card 3: AI Lab -->
+            <a href="ai-lab.html" class="group bg-white p-6 rounded-xl shadow-md border border-slate-200 hover:shadow-xl hover:border-purple-500 transition-all transform hover:-translate-y-1">
+                <div class="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-600 transition">
+                    <i class="fa-solid fa-robot text-2xl text-purple-700 group-hover:text-white"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2">3. AI टूल लैब</h3>
+                <p class="text-sm text-slate-600 mb-4">विश्व के बेहतरीन AI टूल्स और रेडी-टू-यूज़ प्रॉम्प्ट्स।</p>
+                <span class="text-purple-600 font-semibold text-sm inline-flex items-center gap-1">
+                    खोलें <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                </span>
+            </a>
+
+            <!-- Card 4: Vault -->
+            <a href="vault.html" class="group bg-white p-6 rounded-xl shadow-md border border-slate-200 hover:shadow-xl hover:border-red-500 transition-all transform hover:-translate-y-1">
+                <div class="w-14 h-14 bg-red-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-600 transition">
+                    <i class="fa-solid fa-scale-balanced text-2xl text-red-700 group-hover:text-white"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2">4. भ्रष्टाचार वॉल्ट</h3>
+                <p class="text-sm text-slate-600 mb-4">100% गोपनीय तरीके से रिश्वत की शिकायत दर्ज करें।</p>
+                <span class="text-red-600 font-semibold text-sm inline-flex items-center gap-1">
+                    खोलें <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                </span>
+            </a>
+
+        </div>
+
+        <!-- Dropdown/Accordion Section -->
+        <section class="mt-12">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 text-center">विस्तृत जानकारी (ड्रॉपडाउन)</h2>
+            <div class="space-y-3 max-w-4xl mx-auto">
+
+                <!-- Accordion 1 -->
+                <details class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <summary class="cursor-pointer p-4 font-semibold text-slate-800 hover:bg-emerald-50 flex justify-between items-center">
+                        <span><i class="fa-solid fa-leaf text-emerald-600 mr-2"></i>कृषि डॉक्टर & सब्सिडी कैसे काम करता है?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400"></i>
+                    </summary>
+                    <div class="px-4 pb-4 text-sm text-slate-600 border-t border-slate-100 pt-3">
+                        <ul class="list-disc list-inside space-y-2">
+                            <li>ICAR डेटाबेस पर आधारित AI मॉडल से फसल रोगों का सटीक निदान।</li>
+                            <li>फोटो या लक्षण बताकर तुरंत जैविक/रासायनिक उपचार सुझाव।</li>
+                            <li>खाद, बीज, DAP पर सरकारी सब्सिडी के लिए डिजिटल QR टोकन।</li>
+                            <li>बिचौलियों, कमीशन और कालाबाजारी की पूरी समाप्ति।</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <!-- Accordion 2 -->
+                <details class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <summary class="cursor-pointer p-4 font-semibold text-slate-800 hover:bg-blue-50 flex justify-between items-center">
+                        <span><i class="fa-solid fa-graduation-cap text-blue-600 mr-2"></i>शिक्षा व कमाई (Edu-Earn) की विशेषताएँ</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400"></i>
+                    </summary>
+                    <div class="px-4 pb-4 text-sm text-slate-600 border-t border-slate-100 pt-3">
+                        <ul class="list-disc list-inside space-y-2">
+                            <li>AI रील्स, फेसलेस कंटेंट, फ्रीलांसिंग जैसे ऑनलाइन रास्ते।</li>
+                            <li>डिजिटल कृषि सेवा केंद्र, ड्रोन ऑपरेटर जैसे ऑफ़लाइन रास्ते।</li>
+                            <li>वित्तीय साक्षरता — बचत, SIP, चक्रवृद्धि की समझ।</li>
+                            <li>रट्टामार पढ़ाई की जगह असली मार्केट-स्किल्स।</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <!-- Accordion 3 -->
+                <details class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <summary class="cursor-pointer p-4 font-semibold text-slate-800 hover:bg-purple-50 flex justify-between items-center">
+                        <span><i class="fa-solid fa-robot text-purple-600 mr-2"></i>AI टूल लैब में क्या मिलेगा?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400"></i>
+                    </summary>
+                    <div class="px-4 pb-4 text-sm text-slate-600 border-t border-slate-100 pt-3">
+                        <ul class="list-disc list-inside space-y-2">
+                            <li>Text AI: ChatGPT, Claude, Gemini — लेखन, कोडिंग, प्लानिंग।</li>
+                            <li>Graphics AI: Midjourney, Canva AI — लोगो, थंबनेल, पोस्टर।</li>
+                            <li>Voice AI: ElevenLabs, Murf AI — प्राकृतिक आवाज़।</li>
+                            <li>Video AI: Runway, HeyGen — बिना कैमरा वीडियो।</li>
+                            <li>इंटरैक्टिव प्रॉम्प्ट जनरेटर से तुरंत सटीक प्रॉम्प्ट।</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <!-- Accordion 4 -->
+                <details class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <summary class="cursor-pointer p-4 font-semibold text-slate-800 hover:bg-red-50 flex justify-between items-center">
+                        <span><i class="fa-solid fa-scale-balanced text-red-600 mr-2"></i>भ्रष्टाचार-विरोधी वॉल्ट कैसे सुरक्षित है?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400"></i>
+                    </summary>
+                    <div class="px-4 pb-4 text-sm text-slate-600 border-t border-slate-100 pt-3">
+                        <ul class="list-disc list-inside space-y-2">
+                            <li>पूरी तरह गोपनीय (Anonymous) शिकायत — IP सेव नहीं होता।</li>
+                            <li>ब्लॉकचेन हैश आईडी से रिपोर्ट की अटैम्प्ट प्रूफ प्रमाणिकता।</li>
+                            <li>सीधे केंद्रीय सतर्कता आयोग के डिजिटल पोर्टल तक एन्क्रिप्टेड।</li>
+                            <li>रिश्वत, राशन, सब्सिडी से जुड़ी सभी शिकायतें स्वीकार।</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <!-- Accordion 5 -->
+                <details class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <summary class="cursor-pointer p-4 font-semibold text-slate-800 hover:bg-slate-50 flex justify-between items-center">
+                        <span><i class="fa-solid fa-circle-info text-slate-600 mr-2"></i>तकनीकी विवरण और सुरक्षा</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400"></i>
+                    </summary>
+                    <div class="px-4 pb-4 text-sm text-slate-600 border-t border-slate-100 pt-3">
+                        <ul class="list-disc list-inside space-y-2">
+                            <li>256-Bit SSL एन्क्रिप्शन से पूरा डेटा सुरक्षित।</li>
+                            <li>DPIIT मान्यता प्राप्त स्टार्टअप ढांचा।</li>
+                            <li>MeitY TIDE 2.0 और Startup India समर्थित।</li>
+                            <li>AI मॉडल ICAR, केंद्रीय सतर्कता आयोग के डेटाबेस पर आधारित।</li>
+                        </ul>
+                    </div>
+                </details>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs mt-auto">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p>© 2026 सुगम सेवा (Sugam Seva) - आत्मनिर्भर भारत और भ्रष्टाचार-मुक्त समाज के लिए समर्पित।</p>
+            <p>डिजिटल इंडिया • MeitY TIDE 2.0 • Startup India समर्थित ढांचा</p>
+        </div>
+    </footer>
+</body>
+</html>
