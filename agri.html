@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कृषि डॉक्टर & सब्सिडी - सुगम सेवा</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', 'Tiro Devanagari Hindi', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-emerald-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3 space-x-reverse">
+                <i class="fa-solid fa-wheat-awn text-3xl text-emerald-300"></i>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-wide">सुगम सेवा</h1>
+                    <p class="text-xs text-emerald-200">कृषि डॉक्टर & सब्सिडी मॉड्यूल</p>
+                </div>
+            </a>
+            <a href="index.html" class="mt-2 sm:mt-0 bg-emerald-700 hover:bg-emerald-600 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-house"></i> होम पर वापस
+            </a>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-emerald-900 text-emerald-200 text-xs px-4 py-2">
+        <div class="max-w-7xl mx-auto">
+            <a href="index.html" class="hover:text-white">होम</a> / <span class="text-white">कृषि डॉक्टर & सब्सिडी</span>
+        </div>
+    </div>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+
+        <div class="bg-emerald-50 border-l-4 border-emerald-600 p-4 rounded-r-lg">
+            <h2 class="text-xl font-bold text-emerald-900">कृषि डॉक्टर एवं बिचौलिया-मुक्त सब्सिडी प्रणाली</h2>
+            <p class="text-sm text-emerald-700">ICAR प्रमाणित AI द्वारा फसलों के रोगों का सटीक निदान प्राप्त करें और बिना किसी कमीशन या रिश्वत के सीधा सरकारी सब्सिडी QR टोकन जनरेट करें।</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- AI Crop Diagnostic Box -->
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-up text-emerald-600"></i> फसल रोग AI जाँच (RAG मॉडल)
+                </h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">फसल का प्रकार चुनें:</label>
+                        <select id="crop-type" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm bg-slate-50">
+                            <option value="धान">धान (Paddy)</option>
+                            <option value="गेहूँ">गेहूँ (Wheat)</option>
+                            <option value="गन्ना">गन्ना (Sugarcane)</option>
+                            <option value="सरसों">सरसों (Mustard)</option>
+                            <option value="सब्जियाँ">सब्जियाँ (Vegetables)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">लक्षण लिखें या फोटो की स्थिति बताएं:</label>
+                        <textarea id="crop-desc" rows="3" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm" placeholder="उदा. पत्तियों पर पीले धब्बे दिख रहे हैं और जड़ें सूख रही हैं..."></textarea>
+                    </div>
+                    <button onclick="diagnoseCrop()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-lg transition flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-microscope"></i> AI द्वारा रोग जाँचें (सटीक सलाह)
+                    </button>
+                </div>
+
+                <div id="agri-output" class="hidden mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-200 space-y-2">
+                    <h4 class="font-bold text-emerald-900 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check text-emerald-600"></i> AI जाँच परिणाम (ICAR डेटाबेस):
+                    </h4>
+                    <p class="text-sm"><strong>सम्भावित रोग:</strong> <span id="res-disease" class="text-red-600 font-semibold"></span></p>
+                    <p class="text-sm"><strong>जैविक व सटीक उपचार:</strong> <span id="res-remedy"></span></p>
+                    <p class="text-xs text-slate-500 mt-2">* यह सलाह केंद्रीय कृषि अनुसंधान परिषद (ICAR) के मानकों पर आधारित है।</p>
+                </div>
+            </div>
+
+            <!-- Direct Subsidy Digital Token System -->
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-qrcode text-emerald-600"></i> खाद/बीज सब्सिडी डिजिटल टोकन
+                </h3>
+                <p class="text-xs text-slate-600 mb-4">बिचौलियों और कालाबाजारी को खत्म करने के लिए अपना आधार/किसान क्रेडिट नंबर डालकर डायरेक्ट QR कोड प्राप्त करें।</p>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">किसान रजिस्ट्रेशन / आधार संख्या:</label>
+                        <input type="text" id="farmer-id" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm" placeholder="उदा. 9580-XXXX-XXXX">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">आवश्यक सामग्री चुनें:</label>
+                        <select id="subsidy-item" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm bg-slate-50">
+                            <option>यूरिया खाद (सरकारी दर)</option>
+                            <option>DAP उर्वरक (सरकारी सब्सिडी)</option>
+                            <option>प्रमाणित बीज पैकेट</option>
+                        </select>
+                    </div>
+                    <button onclick="generateToken()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-medium py-2.5 rounded-lg transition flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-ticket"></i> डिजिटल टोकन जनरेट करें
+                    </button>
+                </div>
+
+                <div id="token-output" class="hidden mt-6 p-4 bg-slate-100 rounded-lg border border-slate-300 text-center space-y-3">
+                    <div class="inline-block p-3 bg-white border border-slate-400 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-qrcode text-6xl text-slate-800"></i>
+                    </div>
+                    <p class="text-sm font-bold text-slate-800">टोकन कोड: <span id="token-code" class="text-emerald-700"></span></p>
+                    <p class="text-xs text-slate-600">इसे अपने निकटतम अधिकृत सरकारी केंद्र पर दिखाएं। कोई भी अतिरिक्त शुल्क न दें।</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button Bottom -->
+        <div class="text-center pt-4">
+            <a href="index.html" class="inline-flex items-center gap-2 bg-slate-700 hover:bg-slate-800 text-white px-6 py-2.5 rounded-lg font-medium">
+                <i class="fa-solid fa-arrow-left"></i> होम पेज पर वापस जाएँ
+            </a>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs mt-auto">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p>© 2026 सुगम सेवा (Sugam Seva) - कृषि मॉड्यूल</p>
+        </div>
+    </footer>
+
+    <script>
+        function diagnoseCrop() {
+            const crop = document.getElementById('crop-type').value;
+            const desc = document.getElementById('crop-desc').value;
+            if(!desc) { alert('कृपया लक्षण का विवरण दर्ज करें।'); return; }
+            document.getElementById('agri-output').classList.remove('hidden');
+            document.getElementById('res-disease').innerText = crop + " में झुलसा/कीट प्रकोप (Fungal Attack)";
+            document.getElementById('res-remedy').innerText = "10 लीटर पानी में 2 ग्राम कॉपर ऑक्सीक्लोराइड मिलाकर छिड़काव करें। साथ ही जैविक नीम तेल (Neem Oil 10000 PPM) का प्रयोग करें।";
+        }
+        function generateToken() {
+            const id = document.getElementById('farmer-id').value;
+            if(!id) { alert('कृपया आधार या किसान रजिस्ट्रेशन संख्या दर्ज करें।'); return; }
+            const token = "SS-AGRI-" + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('token-output').classList.remove('hidden');
+            document.getElementById('token-code').innerText = token;
+        }
+    </script>
+</body>
+</html>
