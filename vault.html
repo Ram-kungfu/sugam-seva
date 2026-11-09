@@ -57,7 +57,6 @@
                     <textarea id="complaint-desc" rows="4" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm" placeholder="स्थान, तिथि और मांगी गई रिश्वत/अन्याय का पूरा ब्योरा दें..."></textarea>
                 </div>
                 
-                <!-- सुधार: यहाँ साफ-साफ लिखा है कि हमारा प्लेटफॉर्म कुछ सेव नहीं करता -->
                 <div class="flex items-start gap-2 text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
                     <i class="fa-solid fa-lock text-emerald-600 mt-0.5"></i> 
                     <span>यह प्लेटफॉर्म आपकी शिकायत को किसी भी सर्वर पर सेव नहीं करता। आपकी बात यहाँ 100% सुरक्षित और गोपनीय है।</span>
@@ -73,14 +72,23 @@
                 <div class="text-center">
                     <i class="fa-solid fa-shield-cat text-4xl text-emerald-400 mb-2"></i>
                     <h4 class="font-bold text-lg">आपकी शिकायत तैयार है!</h4>
-                    <p class="text-xs text-slate-300">यहाँ से आप सीधा सरकारी (CVC) पोर्टल पर जा सकते हैं, शिकायत कॉपी कर सकते हैं या डाउनलोड कर सकते हैं।</p>
+                    <p class="text-xs text-slate-300">नीचे दिए गए किसी भी सरकारी पोर्टल पर जाएँ और अपनी शिकायत दर्ज करें।</p>
                 </div>
                 
-                <!-- Buttons Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                    <a href="https://portal.cvc.gov.in" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2.5 rounded-lg flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-external-link-alt"></i> CVC पोर्टल पर जाएँ
+                <!-- Government Portals Buttons (2 Options) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                    <!-- CPGRAMS (PMO Portal) -->
+                    <a href="https://pgportal.gov.in" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2.5 rounded-lg flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-landmark"></i> CPGRAMS (PMO) पोर्टल
                     </a>
+                    <!-- CVC Portal -->
+                    <a href="https://portal.cvc.gov.in" target="_blank" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-2.5 rounded-lg flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-scale-balanced"></i> CVC (सतर्कता) पोर्टल
+                    </a>
+                </div>
+
+                <!-- Copy & Download Buttons -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                     <button onclick="copyComplaint()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 text-sm font-bold py-2.5 rounded-lg flex items-center justify-center gap-2">
                         <i class="fa-solid fa-copy"></i> शिकायत कॉपी करें
                     </button>
@@ -89,10 +97,10 @@
                     </button>
                 </div>
 
-                <!-- सुधार: चेतावनी जोड़ी गई है ताकि किसी को कोई ऑब्जेक्शन न हो -->
+                <!-- Warning Notice -->
                 <div class="bg-red-900/50 border border-red-500 p-3 rounded-lg mt-2">
                     <p class="text-[11px] text-red-200 text-center">
-                        <strong>⚠️ महत्वपूर्ण सूचना:</strong> सरकारी (CVC) पोर्टल पर असली शिकायत दर्ज करने के लिए आपको अपना असली नाम और पता देना होगा। वहाँ आपकी जानकारी सरकार के नियमों के अनुसार सुरक्षित रखी जाती है, ताकि जाँच अधिकारी आपसे संपर्क कर सकें।
+                        <strong>⚠️ महत्वपूर्ण सूचना:</strong> सरकारी पोर्टल पर असली शिकायत दर्ज करने के लिए आपको अपना असली नाम और पता देना होगा। वहाँ आपकी जानकारी सरकार के नियमों के अनुसार सुरक्षित रखी जाती है, ताकि जाँच अधिकारी आपसे संपर्क कर सकें।
                     </p>
                 </div>
             </div>
@@ -138,12 +146,12 @@
         function copyComplaint() {
             const textContent = `शिकायत विवरण (Complaint Details)\n\nविभाग/अधिकारी: ${currentDept}\n\nघटना का विवरण:\n${currentDesc}\n\nदिनांक: ${new Date().toLocaleDateString('hi-IN')}\n\n------------------------\nसुगम सेवा (Sugam Seva) द्वारा जनरेट किया गया।`;
             navigator.clipboard.writeText(textContent);
-            alert('आपकी शिकायत कॉपी हो गई है! अब आप इसे CVC पोर्टल पर पेस्ट कर सकते हैं।');
+            alert('आपकी शिकायत कॉपी हो गई है! अब आप इसे सरकारी पोर्टल पर पेस्ट कर सकते हैं।');
         }
 
         // 3. शिकायत डाउनलोड करने का फंक्शन
         function downloadComplaint() {
-            const textContent = `शिकायत विवरण (Complaint Details)\n\nविभाग/अधिकारी: ${currentDept}\n\nघटना का विवरण:\n${currentDesc}\n\nदिनांक: ${new Date().toLocaleDateString('hi-IN')}\n\n------------------------\nसुगम सेवा (Sugam Seva) द्वारा जनरेट किया गया।\nइसे केंद्रीय सतर्कता आयोग (CVC) पोर्टल पर जमा करें।`;
+            const textContent = `शिकायत विवरण (Complaint Details)\n\nविभाग/अधिकारी: ${currentDept}\n\nघटना का विवरण:\n${currentDesc}\n\nदिनांक: ${new Date().toLocaleDateString('hi-IN')}\n\n------------------------\nसुगम सेवा (Sugam Seva) द्वारा जनरेट किया गया।\nइसे CPGRAMS या CVC पोर्टल पर जमा करें।`;
 
             const blob = new Blob([textContent], { type: 'text/plain' });
             const url = window.URL.createObjectURL(blob);
