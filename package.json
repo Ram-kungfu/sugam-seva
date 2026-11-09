@@ -1,0 +1,12 @@
+{
+  "name": "sugam-seva",
+  "version": "1.0.0",
+  "description": "AI Super App for Farmers and Students",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
