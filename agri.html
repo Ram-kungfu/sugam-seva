@@ -47,7 +47,7 @@
             <!-- AI Crop Diagnostic Box -->
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
                 <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-cloud-arrow-up text-emerald-600"></i> फसल रोग AI जाँच (RAG मॉडल)
+                    <i class="fa-solid fa-cloud-arrow-up text-emerald-600"></i> फसल रोग AI जाँच (Vision AI)
                 </h3>
                 <div class="space-y-4">
                     <div>
@@ -60,22 +60,46 @@
                             <option value="सब्जियाँ">सब्जियाँ (Vegetables)</option>
                         </select>
                     </div>
+                    
                     <div>
                         <label class="block text-sm font-medium mb-1">लक्षण लिखें या फोटो की स्थिति बताएं:</label>
                         <textarea id="crop-desc" rows="3" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm" placeholder="उदा. पत्तियों पर पीले धब्बे दिख रहे हैं और जड़ें सूख रही हैं..."></textarea>
                     </div>
+
+                    <!-- फोटो अपलोड / कैमरा ऑप्शन -->
+                    <div class="flex gap-3 mt-2">
+                        <label class="flex-1 bg-white border border-emerald-500 text-emerald-700 hover:bg-emerald-50 py-2 rounded-lg text-center cursor-pointer text-sm font-semibold flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-camera"></i> फोटो खींचें
+                            <input type="file" id="camera-input" accept="image/*" capture="environment" class="hidden" onchange="previewImage(event)">
+                        </label>
+                        
+                        <label class="flex-1 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 py-2 rounded-lg text-center cursor-pointer text-sm font-semibold flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-image"></i> गैलरी से चुनें
+                            <input type="file" id="gallery-input" accept="image/*" class="hidden" onchange="previewImage(event)">
+                        </label>
+                    </div>
+
+                    <!-- चुनी गई फोटो का प्रीव्यू -->
+                    <div id="image-preview-container" class="hidden mt-3 relative w-full h-48 bg-slate-100 rounded-lg overflow-hidden border border-slate-300">
+                        <img id="image-preview" class="w-full h-full object-cover" alt="चुनी गई फोटो">
+                        <button onclick="removeImage()" class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-md">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    </div>
+
                     <button onclick="diagnoseCrop()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-lg transition flex justify-center items-center gap-2">
                         <i class="fa-solid fa-microscope"></i> AI द्वारा रोग जाँचें (सटीक सलाह)
                     </button>
                 </div>
 
+                <!-- AI Output Box -->
                 <div id="agri-output" class="hidden mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-200 space-y-2">
                     <h4 class="font-bold text-emerald-900 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-check text-emerald-600"></i> AI जाँच परिणाम (ICAR डेटाबेस):
+                        <i class="fa-solid fa-circle-check text-emerald-600"></i> AI जाँच परिणाम (Live API):
                     </h4>
-                    <p class="text-sm"><strong>सम्भावित रोग:</strong> <span id="res-disease" class="text-red-600 font-semibold"></span></p>
-                    <p class="text-sm"><strong>जैविक व सटीक उपचार:</strong> <span id="res-remedy"></span></p>
-                    <p class="text-xs text-slate-500 mt-2">* यह सलाह केंद्रीय कृषि अनुसंधान परिषद (ICAR) के मानकों पर आधारित है।</p>
+                    <!-- AI का जवाब यहाँ आएगा -->
+                    <p class="text-sm text-slate-800 whitespace-pre-wrap" id="res-disease"></p>
+                    <p class="text-xs text-slate-500 mt-2">* यह सलाह Google Gemini AI द्वारा दी गई है।</p>
                 </div>
             </div>
 
@@ -127,15 +151,105 @@
         </div>
     </footer>
 
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC START                     -->
+    <!-- ========================================== -->
     <script>
-        function diagnoseCrop() {
+        // 🔴 अपनी API Key यहाँ डालें (नीचे दी गई लाइन में)
+        const GEMINI_API_KEY = "आपकी_API_Key_यहाँ_पेस्ट_करें"; 
+
+        // --- 1. फोटो प्रीव्यू और हटाने का लॉजिक ---
+        let uploadedImageBase64 = null; 
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('image-preview').src = e.target.result;
+                    document.getElementById('image-preview-container').classList.remove('hidden');
+                    uploadedImageBase64 = e.target.result.split(',')[1]; 
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeImage() {
+            document.getElementById('image-preview-container').classList.add('hidden');
+            document.getElementById('camera-input').value = '';
+            document.getElementById('gallery-input').value = '';
+            uploadedImageBase64 = null;
+        }
+
+        // --- 2. AI डायग्नोसिस फंक्शन (टेक्स्ट और फोटो दोनों के लिए) ---
+        async function diagnoseCrop() {
             const crop = document.getElementById('crop-type').value;
             const desc = document.getElementById('crop-desc').value;
-            if(!desc) { alert('कृपया लक्षण का विवरण दर्ज करें।'); return; }
-            document.getElementById('agri-output').classList.remove('hidden');
-            document.getElementById('res-disease').innerText = crop + " में झुलसा/कीट प्रकोप (Fungal Attack)";
-            document.getElementById('res-remedy').innerText = "10 लीटर पानी में 2 ग्राम कॉपर ऑक्सीक्लोराइड मिलाकर छिड़काव करें। साथ ही जैविक नीम तेल (Neem Oil 10000 PPM) का प्रयोग करें।";
+            
+            if(!desc && !uploadedImageBase64) {
+                alert('कृपया लक्षण लिखें या फोटो अपलोड करें।');
+                return;
+            }
+
+            // बटन को लोडिंग स्टेट में बदलें
+            const btn = event.target.closest('button');
+            const originalBtnText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> AI फोटो/लक्षण देख रहा है...';
+            btn.disabled = true;
+
+            // AI के लिए प्रॉम्प्ट तैयार करें
+            let promptText = `मैं एक किसान हूँ। मेरी फसल "${crop}" है। `;
+            if(desc) promptText += `लक्षण: "${desc}"। `;
+            if(uploadedImageBase64) promptText += `मैंने इसकी एक फोटो भी भेजी है, कृपया इसे ध्यान से देखें। `;
+            promptText += `तुम एक कृषि विशेषज्ञ हो। मुझे सिर्फ 2 चीजें बताओ: 1. सम्भावित रोग का नाम 2. जैविक व सटीक उपचार (ICAR के अनुसार)। जवाब हिंदी में और छोटा रखें।`;
+
+            // API के लिए पेलोड तैयार करें
+            let requestBody = {
+                contents: [{
+                    parts: [{ text: promptText }]
+                }]
+            };
+
+            // अगर फोटो है, तो उसे भी पेलोड में जोड़ें
+            if (uploadedImageBase64) {
+                requestBody.contents[0].parts.push({
+                    inline_data: {
+                        mime_type: "image/jpeg",
+                        data: uploadedImageBase64
+                    }
+                });
+            }
+
+            try {
+                // Gemini 1.5 Flash मॉडल (यह तेज़ है और फोटो भी पढ़ सकता है)
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+
+                if(data.candidates && data.candidates.length > 0) {
+                    const aiReply = data.candidates[0].content.parts[0].text;
+                    
+                    document.getElementById('agri-output').classList.remove('hidden');
+                    document.getElementById('res-disease').innerText = aiReply;
+                } else {
+                    alert('AI से जवाब नहीं मिला। कृपया API Key या इंटरनेट चेक करें।');
+                    console.log(data); // डेवलपर के लिए एरर देखने हेतु
+                }
+
+            } catch (error) {
+                console.error("Error:", error);
+                alert('इंटरनेट या API में कोई समस्या है।');
+            } finally {
+                btn.innerHTML = originalBtnText;
+                btn.disabled = false;
+            }
         }
+
+        // --- 3. सब्सिडी टोकन जनरेटर ---
         function generateToken() {
             const id = document.getElementById('farmer-id').value;
             if(!id) { alert('कृपया आधार या किसान रजिस्ट्रेशन संख्या दर्ज करें।'); return; }
