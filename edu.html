@@ -9,6 +9,12 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Inter:wght@300;400;600;700&display=swap');
         body { font-family: 'Inter', 'Tiro Devanagari Hindi', sans-serif; }
+        
+        /* चैट बॉक्स को स्क्रॉल करने के लिए */
+        .chat-box {
+            max-height: 400px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -41,7 +47,42 @@
             <p class="text-sm text-blue-700">पारंपरिक रट्टामार पढ़ाई से मुक्ति पाएँ। 100% व्यावहारिक डिजिटल और स्थानीय कौशल सीखकर ऑनलाइन व ऑफ़लाइन पैसे कमाएँ।</p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6">
+        <!-- ========================================== -->
+        <!-- नया AI स्टडी असिस्टेंट सेक्शन               -->
+        <!-- ========================================== -->
+        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+            <h3 class="text-lg font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-brain text-blue-600"></i> AI स्टडी असिस्टेंट (पढ़ाई करें और टेस्ट दें)
+            </h3>
+            <p class="text-xs text-slate-600 mb-4">अपने सिलेबस, कोर्स या किसी भी विषय से जुड़ा सवाल पूछें। AI आपको आसान भाषा में समझाएगा और आपका ज्ञान टेस्ट भी करेगा।</p>
+            
+            <!-- चैट बॉक्स -->
+            <div id="chat-container" class="chat-box bg-slate-50 border border-slate-300 rounded-lg p-4 mb-3 space-y-3">
+                <!-- शुरुआती मैसेज -->
+                <div class="flex items-start gap-2">
+                    <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="bg-white border border-slate-200 p-3 rounded-lg text-sm text-slate-700">
+                        नमस्ते! मैं आपका AI शिक्षक हूँ। आप मुझसे गणित, विज्ञान, अंग्रेजी, कंप्यूटर या किसी भी स्किल के बारे में पूछ सकते हैं। आप चाहें तो मुझसे कहें—"मेरा टेस्ट लो"।
+                    </div>
+                </div>
+            </div>
+
+            <!-- इनपुट बॉक्स -->
+            <div class="flex gap-2">
+                <input type="text" id="chat-input" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm" placeholder="अपना सवाल यहाँ लिखें (उदा. फोटोसिंथेसिस क्या है?)..." onkeypress="if(event.key === 'Enter') askAI()">
+                <button onclick="askAI()" id="send-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2.5 rounded-lg transition flex items-center justify-center">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+        <!-- ========================================== -->
+        <!-- AI सेक्शन खत्म                              -->
+        <!-- ========================================== -->
+
+
+        <div class="grid md:grid-cols-2 gap-6 mt-6">
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
                 <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center gap-2">
                     <i class="fa-solid fa-globe text-blue-600"></i> 1. ऑनलाइन कमाई के रास्ते
@@ -85,7 +126,7 @@
             </div>
         </div>
 
-        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 mt-6">
             <h3 class="text-lg font-semibold text-slate-800 mb-3 flex items-center gap-2">
                 <i class="fa-solid fa-coins text-amber-500"></i> मनी मैनेजमेंट व बचत (Financial Literacy)
             </h3>
@@ -117,5 +158,105 @@
             <p>© 2026 सुगम सेवा (Sugam Seva) - शिक्षा व कमाई मॉड्यूल</p>
         </div>
     </footer>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC (AI चैट के लिए)             -->
+    <!-- ========================================== -->
+    <script>
+        // 🔴 अपनी API Key यहाँ डालें (वही जो एग्रीकल्चर में डाली थी)
+        const GEMINI_API_KEY = "आपकी_API_Key_यहाँ_पेस्ट_करें"; 
+
+        async function askAI() {
+            const inputField = document.getElementById('chat-input');
+            const userQuestion = inputField.value.trim();
+            const chatContainer = document.getElementById('chat-container');
+            const sendBtn = document.getElementById('send-btn');
+
+            if(!userQuestion) return;
+
+            // 1. यूजर का सवाल स्क्रीन पर दिखाएं
+            chatContainer.innerHTML += `
+                <div class="flex items-start gap-2 justify-end">
+                    <div class="bg-blue-600 text-white p-3 rounded-lg text-sm max-w-[80%]">
+                        ${userQuestion}
+                    </div>
+                </div>
+            `;
+            inputField.value = ''; // इनपुट बॉक्स खाली करें
+            chatContainer.scrollTop = chatContainer.scrollHeight; // नीचे स्क्रॉल करें
+
+            // 2. लोडिंग मैसेज दिखाएं
+            const loadingId = "loading-" + Date.now();
+            chatContainer.innerHTML += `
+                <div class="flex items-start gap-2" id="${loadingId}">
+                    <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="bg-white border border-slate-200 p-3 rounded-lg text-sm text-slate-500 flex items-center gap-2">
+                        <i class="fa-solid fa-spinner fa-spin"></i> AI सोच रहा है...
+                    </div>
+                </div>
+            `;
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            sendBtn.disabled = true;
+
+            // 3. AI के लिए प्रॉम्प्ट तैयार करें
+            const promptText = `तुम एक बहुत अच्छे और प्यारे शिक्षक हो। एक छात्र ने तुमसे यह सवाल पूछा है: "${userQuestion}"। 
+            कृपया इसका जवाब बहुत ही आसान, सरल और हिंदी भाषा में दो, जिससे एक आम बच्चा भी आसानी से समझ सके। 
+            अगर छात्र कहे कि "मेरा टेस्ट लो", तो उसे 3 आसान सवालों का एक छोटा टेस्ट दो (उत्तर अलग से नीचे दो)।`;
+
+            try {
+                // 4. Google Gemini API को कॉल करें
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: promptText }] }]
+                    })
+                });
+
+                const data = await response.json();
+                document.getElementById(loadingId).remove(); // लोडिंग हटाएं
+
+                // 5. AI का जवाब दिखाएं
+                if(data.candidates && data.candidates.length > 0) {
+                    const aiReply = data.candidates[0].content.parts[0].text;
+                    
+                    chatContainer.innerHTML += `
+                        <div class="flex items-start gap-2">
+                            <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div class="bg-white border border-slate-200 p-3 rounded-lg text-sm text-slate-700 max-w-[85%] whitespace-pre-wrap">
+                                ${aiReply}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    chatContainer.innerHTML += `
+                        <div class="flex items-start gap-2">
+                            <div class="bg-red-100 text-red-600 p-3 rounded-lg text-sm">
+                                क्षमा करें, AI से जवाब नहीं मिला। कृपया API Key चेक करें।
+                            </div>
+                        </div>
+                    `;
+                }
+
+            } catch (error) {
+                document.getElementById(loadingId).remove();
+                console.error("Error:", error);
+                chatContainer.innerHTML += `
+                    <div class="flex items-start gap-2">
+                        <div class="bg-red-100 text-red-600 p-3 rounded-lg text-sm">
+                            इंटरनेट या API में कोई समस्या है। कृपया दोबारा कोशिश करें।
+                        </div>
+                    </div>
+                `;
+            } finally {
+                sendBtn.disabled = false;
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        }
+    </script>
 </body>
-      </html>
+</html>
