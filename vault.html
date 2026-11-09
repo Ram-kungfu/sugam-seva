@@ -40,7 +40,7 @@
 
         <div class="bg-red-50 border-l-4 border-red-600 p-4 rounded-r-lg">
             <h2 class="text-xl font-bold text-red-900">भ्रष्टाचार-विरोधी वॉल्ट (Confidential Anti-Corruption Portal)</h2>
-            <p class="text-sm text-red-700">यदि कोई सरकारी या गैर-सरकारी अधिकारी आपसे योजना, सब्सिडी या राशन में रिश्वत मांगता है, तो यहाँ 100% गोपनीय रिपोर्ट तैयार करें और सीधा सरकारी पोर्टल पर भेजें।</p>
+            <p class="text-sm text-red-700">यदि कोई सरकारी या गैर-सरकारी अधिकारी आपसे योजना, सब्सिडी या राशन में रिश्वत मांगता है, तो यहाँ रिपोर्ट तैयार करें और सीधा सरकारी पोर्टल पर भेजें।</p>
         </div>
 
         <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 space-y-4 max-w-3xl mx-auto">
@@ -56,9 +56,13 @@
                     <label class="block text-sm font-medium mb-1">घटना का विवरण व स्थान:</label>
                     <textarea id="complaint-desc" rows="4" class="w-full border border-slate-300 p-2.5 rounded-lg text-sm" placeholder="स्थान, तिथि और मांगी गई रिश्वत/अन्याय का पूरा ब्योरा दें..."></textarea>
                 </div>
-                <div class="flex items-center gap-2 text-xs text-slate-500">
-                    <i class="fa-solid fa-lock text-emerald-600"></i> आपकी पहचान पूरी तरह गुप्त (Anonymous) रखी जाएगी।
+                
+                <!-- सुधार: यहाँ साफ-साफ लिखा है कि हमारा प्लेटफॉर्म कुछ सेव नहीं करता -->
+                <div class="flex items-start gap-2 text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+                    <i class="fa-solid fa-lock text-emerald-600 mt-0.5"></i> 
+                    <span>यह प्लेटफॉर्म आपकी शिकायत को किसी भी सर्वर पर सेव नहीं करता। आपकी बात यहाँ 100% सुरक्षित और गोपनीय है।</span>
                 </div>
+
                 <button onclick="submitComplaint()" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-lg transition flex justify-center items-center gap-2">
                     <i class="fa-solid fa-paper-plane"></i> शिकायत तैयार करें (रिपोर्ट जनरेट करें)
                 </button>
@@ -84,7 +88,13 @@
                         <i class="fa-solid fa-download"></i> डाउनलोड करें
                     </button>
                 </div>
-                <p class="text-[10px] text-slate-400 text-center mt-2">* CVC पोर्टल पर शिकायत दर्ज करने के लिए आपको अपना नाम और पता देना होगा (गोपनीय रखा जाएगा)।</p>
+
+                <!-- सुधार: चेतावनी जोड़ी गई है ताकि किसी को कोई ऑब्जेक्शन न हो -->
+                <div class="bg-red-900/50 border border-red-500 p-3 rounded-lg mt-2">
+                    <p class="text-[11px] text-red-200 text-center">
+                        <strong>⚠️ महत्वपूर्ण सूचना:</strong> सरकारी (CVC) पोर्टल पर असली शिकायत दर्ज करने के लिए आपको अपना असली नाम और पता देना होगा। वहाँ आपकी जानकारी सरकार के नियमों के अनुसार सुरक्षित रखी जाती है, ताकि जाँच अधिकारी आपसे संपर्क कर सकें।
+                    </p>
+                </div>
             </div>
         </div>
 
